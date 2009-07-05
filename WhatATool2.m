@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import "PolygonShape.h"
 
 void PrintPathInfo() {
     NSLog(@"Section 1: PrintPathInfo()\n");
@@ -22,10 +23,6 @@ void PrintProcessInfo() {
 
     NSProcessInfo *ps = [NSProcessInfo processInfo];
     NSLog(@"Process Name: '%@' Process ID: '%d'", [ps processName], [ps processIdentifier]);
-
-    // NSString *processName = [ps processName];
-    // NSUInteger processIdentifier = [ps processIdentifier];
-    // NSLog(@"Process Name: '%@' Process ID: '%d'", processName, processIdentifier);
 
     NSLog(@"\n");
 } 
@@ -94,6 +91,39 @@ void PrintPolygonInfo(){
     NSLog(@"Section 6: PrintPolygonInfo()\n");
     NSLog(@"===================================\n");
 
+    // create a bunch of polygons and add them into a mutable array
+    NSMutableArray *polygons = [[NSMutableArray alloc] init];
+
+    // create a four sided polygon, with min of 3, and max of 7
+    PolygonShape *rectangle = [[PolygonShape alloc] init];
+    [rectangle setNumberOfSides:4];
+    [rectangle setMinimumNumberOfSides:3];
+    [rectangle setMaximumNumberOfSides:7];
+    [polygons addObject:rectangle];
+    NSLog(@"Added polygon to mutable array: %@", [rectangle description]);
+
+    // create a six sided polygon, with min of 5, and max of 9
+    PolygonShape *hexagon = [[PolygonShape alloc] initWithNumberOfSides:6 minimumNumberOfSides:5];
+    [hexagon setMaximumNumberOfSides:9];
+    [polygons addObject:hexagon];
+    NSLog(@"Added polygon to mutable array: %@", [hexagon description]);
+
+    // create a twelve sided polygon, with min of 9, and max of 12
+    PolygonShape *dodecagon = [[PolygonShape alloc] initWithNumberOfSides:12 minimumNumberOfSides:9 maximumNumberOfSides:12];
+    [polygons addObject:dodecagon];
+    NSLog(@"Added polygon to mutable array: %@", [dodecagon description]);
+
+    // iterate overy polygons array, and try setting number of sides to 10
+    for (PolygonShape *polygon in polygons) {
+        [polygon setNumberOfSides:10];
+    }
+
+    // clean up
+    [polygons dealloc];
+    [dodecagon dealloc];
+    [hexagon dealloc];
+    [rectangle dealloc];
+
     NSLog(@"\n");
 }
 
@@ -104,7 +134,7 @@ int main (int argc, const char * argv[]) {
     PrintProcessInfo();        // Section 2 
     PrintBookmarkInfo();       // Section 3
     PrintIntrospectionInfo();  // Section 4
-    PrintPolygonInfo();        // Section 6
+    PrintPolygonInfo();        // Section 6 (No function for section 5)
 
     [pool drain];
     return 0;
