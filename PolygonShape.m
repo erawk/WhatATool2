@@ -15,6 +15,8 @@
 @synthesize minimumNumberOfSides;
 @synthesize maximumNumberOfSides;
 
+#pragma mark Initialization methods
+
 - (void)dealloc {
     NSLog(@"dealloc is being called");
     [super dealloc];
@@ -33,7 +35,8 @@
 }
 
 - (id)initWithNumberOfSides:(int)sides minimumNumberOfSides:(int)min maximumNumberOfSides:(int)max {
-    if (self = [super init]) {     
+    if (self = [super init]) {
+        // enforce min and max using these as defaults
         minimumNumberOfSides = 3;
         maximumNumberOfSides = 12;
         numberOfSides = minimumNumberOfSides;
@@ -45,6 +48,8 @@
 
     return self;
 }
+
+#pragma mark Setter methods
 
 // use a validation to ensure sides is within min and max
 - (void)setNumberOfSides:(int)sides { 
@@ -66,6 +71,8 @@
         maximumNumberOfSides = sides;
     }
 } 
+
+#pragma mark Validation methods
 
 // validation method to ensure sides are within min and max
 - (BOOL)isValidNumberOfSides:(int)sides {
@@ -102,15 +109,19 @@
     return YES;
 }
 
+#pragma mark Angle calculation methods
+
 // angle in degrees is (180 * (numberOfSides - 2)) / numberOfSides
 - (float)angleInDegrees {
-    return (float) ((180 * ([self numberOfSides] - 2)) / (float)[self numberOfSides]);
+    return (180.0 * (numberOfSides - 2)) / numberOfSides;
 }
 
 // angle in radians is (angle in degrees * pi) / 180 
 - (float)angleInRadians {
-    return (float) ([self angleInDegrees] * ( M_PI / (float) 180));
+    return [self angleInDegrees] * (M_PI / 180.0);
 }
+
+#pragma mark Name and description methods
 
 // array of shape names, with numberOfSides as index
 - (NSString *)name {

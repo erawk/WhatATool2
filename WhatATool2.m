@@ -94,35 +94,36 @@ void PrintPolygonInfo(){
     // create a bunch of polygons and add them into a mutable array
     NSMutableArray *polygons = [[NSMutableArray alloc] init];
 
-    // create a four sided polygon, with min of 3, and max of 7
+    // create a four sided polygon, with min of 3, and max of 7; release it after adding
     PolygonShape *rectangle = [[PolygonShape alloc] init];
     [rectangle setNumberOfSides:4];
     [rectangle setMinimumNumberOfSides:3];
     [rectangle setMaximumNumberOfSides:7];
     [polygons addObject:rectangle];
     NSLog(@"Added polygon to mutable array: %@", [rectangle description]);
+    [rectangle release];
 
-    // create a six sided polygon, with min of 5, and max of 9
+    // create a six sided polygon, with min of 5, and max of 9; release it after adding
     PolygonShape *hexagon = [[PolygonShape alloc] initWithNumberOfSides:6 minimumNumberOfSides:5];
     [hexagon setMaximumNumberOfSides:9];
     [polygons addObject:hexagon];
     NSLog(@"Added polygon to mutable array: %@", [hexagon description]);
+    [hexagon release];
 
-    // create a twelve sided polygon, with min of 9, and max of 12
+    // create a twelve sided polygon, with min of 9, and max of 12; release it after adding
     PolygonShape *dodecagon = [[PolygonShape alloc] initWithNumberOfSides:12 minimumNumberOfSides:9 maximumNumberOfSides:12];
     [polygons addObject:dodecagon];
     NSLog(@"Added polygon to mutable array: %@", [dodecagon description]);
+    [dodecagon release];
 
     // iterate overy polygons array, and try setting number of sides to 10
     for (PolygonShape *polygon in polygons) {
         [polygon setNumberOfSides:10];
+        [polygon release];
     }
 
-    // clean up
-    [polygons dealloc];
-    [dodecagon dealloc];
-    [hexagon dealloc];
-    [rectangle dealloc];
+    // clean up polygon array
+    [polygons release];
 
     NSLog(@"\n");
 }
